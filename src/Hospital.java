@@ -12,7 +12,9 @@ public class Hospital {
             System.out.println("4 .Update");
             System.out.println("5 .Delete");
             System.out.println("6 .Count of doctors");
-            System.out.println("7 .Exit");
+            System.out.println("7 .Name of doctor affcted by fever");
+
+            System.out.println("8 .Exit");
 
             choice = hos.nextInt();
 
@@ -173,8 +175,27 @@ public class Hospital {
                         System.out.println(e);
                     }
                     break;
-
                 case 7:
+
+                    System.out.println("Name of doctor who consult fever");
+                    try {
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitaldb", "root", "");
+                        String sql = "SELECT COUNT(*) AS number,`docname` FROM `patients` WHERE `symptoms`='fever' GROUP BY `docname`";
+                        Statement stmt = con.createStatement();
+                        ResultSet rs = stmt.executeQuery(sql);
+                        while (rs.next()) {
+                            String getCount = rs.getString("number");
+                            String getDoc = rs.getString("docname");
+                            System.out.println("Number of patients consult to this doctor for fever +" + getCount);
+                            System.out.println("Name of doctor =" + getDoc + '\n');
+                        }
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
+                    break;
+
+                case 8:
                     System.exit(0);
             }
         }
