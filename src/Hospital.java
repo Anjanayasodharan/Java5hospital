@@ -11,7 +11,8 @@ public class Hospital {
             System.out.println("3 .Search");
             System.out.println("4 .Update");
             System.out.println("5 .Delete");
-            System.out.println("6 .Exit");
+            System.out.println("6 .Count of doctors");
+            System.out.println("7 .Exit");
 
             choice = hos.nextInt();
 
@@ -153,7 +154,27 @@ public class Hospital {
                         System.out.println(e);
                     }
                     break;
+
                 case 6:
+                    System.out.println("Number of doctors");
+                    try {
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitaldb", "root", "");
+                        String sql = "SELECT COUNT(*) AS number,`docname` FROM `patients` GROUP BY `docname`";
+                        Statement stmt = con.createStatement();
+                        ResultSet rs = stmt.executeQuery(sql);
+                        while (rs.next()) {
+                            String getCount = rs.getString("number");
+                            String getDoc = rs.getString("docname");
+                            System.out.println("Number of patients consult to this doctor is +" + getCount);
+                            System.out.println("Name of doctor =" + getDoc + '\n');
+                        }
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
+                    break;
+
+                case 7:
                     System.exit(0);
             }
         }
