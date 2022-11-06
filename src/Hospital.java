@@ -1,3 +1,6 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.util.Scanner;
 public class Hospital {
     public static void main(String[] args) {
@@ -17,6 +20,38 @@ public class Hospital {
             switch (choice){
                 case 1:
                     System.out.println("Insert the data ");
+                    System.out.println("Enter the patient Id");
+                    int patientid = hos.nextInt();
+                    System.out.println("Enter the patient name");
+                    String name = hos.next();
+                    System.out.println("Address");
+                    String address = hos.next();
+                    System.out.println("pincode");
+                    int pincode = hos.nextInt();
+                    System.out.println("Phone Number");
+                    String phno = hos.next();
+                    System.out.println("Symptoms");
+                    String symptoms = hos.next();
+                    System.out.println("Doctor name");
+                    String docname = hos.next();
+
+                    try{
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitaldb","root","");
+                        String sql = "INSERT INTO `patients`(`patientid`, `name`, `address`, `pincode`, `phno`, `symptoms`, `docname`) VALUES (?,?,?,?,?,?,?)";
+                        PreparedStatement stmt = con.prepareStatement(sql);
+                        stmt.setInt(1,patientid);
+                        stmt.setString(2,name);
+                        stmt.setString(3,address);
+                        stmt.setInt(4,pincode);
+                        stmt.setString(5,phno);
+                        stmt.setString(6,symptoms);
+                        stmt.setString(7,docname);
+                        stmt.executeUpdate();
+                    }
+                    catch (Exception e){
+                        System.out.println(e);
+                    }
                     break;
                 case 2:
                     System.out.println("View the data ");
