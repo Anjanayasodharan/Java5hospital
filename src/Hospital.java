@@ -109,9 +109,33 @@ public class Hospital {
                         System.out.println(e);
                     }
                     break;
-                case 4:
-                    System.out.println("Update the data ");
 
+                case 4:
+                    System.out.println("Enter the patient Id");
+                    patientid = hos.nextInt();
+                    System.out.println("Enter the patient name");
+                    name = hos.next();
+                    System.out.println("Address");
+                    address = hos.next();
+                    System.out.println("pincode");
+                    pincode = hos.nextInt();
+                    System.out.println("Phone Number");
+                    phno = hos.next();
+                    System.out.println("Symptoms");
+                    symptoms = hos.next();
+                    System.out.println("Doctor name");
+                    docname = hos.next();
+
+                    try {
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitaldb", "root", "");
+                        String sql = "UPDATE `patients` SET `patientid`='" + patientid + "',`name`='" + name + "',`address`='" + address + "',`pincode`='" + pincode + "',`phno`='" + phno + "',`symptoms`='" + symptoms + "',`docname`='" + docname + "' WHERE `patientid`=" +patientid;
+                        Statement stmt = con.createStatement();
+                        stmt.executeUpdate(sql);
+                        System.out.println("Updated successfully");
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
                     break;
                 case 5:
                     System.out.println("Delete the data");
